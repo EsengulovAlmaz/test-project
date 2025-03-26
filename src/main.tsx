@@ -1,4 +1,4 @@
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 
 import { createRoot } from 'react-dom/client'
 
@@ -8,7 +8,7 @@ import './main.css'
 const basename = '/test-project'
 
 createRoot(document.getElementById('root')!).render(
-  <BrowserRouter basename={basename}>
+  <HashRouter basename={basename}>
     <App />
-  </BrowserRouter>,
+  </HashRouter>,
 )
