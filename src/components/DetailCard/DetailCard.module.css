@@ -1,0 +1,27 @@
+.detailCard {
+  width: 100%;
+  min-height: 55px;
+  justify-content: space-between;
+  border: 1px solid #000;
+  border-radius: 15px;
+  padding: 20px;
+  gap: 10px;
+  background: #fff;
+}
+
+.detailCard__title {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 15.4px;
+  color: #737373;
+  white-space: nowrap;
+}
+
+.detailCard__value {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 15.4px;
+  color: #333;
+  text-align: right;
+  word-break: break-all;
+}

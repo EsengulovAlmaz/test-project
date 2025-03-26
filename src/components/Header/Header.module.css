@@ -1,0 +1,22 @@
+.header {
+  background: #fff;
+}
+
+.header__wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header__title {
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.header__create {
+  font-size: 20px;
+}
+
+.search {
+  width: 30%;
+}

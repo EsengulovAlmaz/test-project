@@ -1,0 +1,77 @@
+.formSelectBlock {
+  width: 100%;
+  height: auto;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.formSelectBlock :global(.ant-form-item) {
+  margin-bottom: 0px;
+}
+
+.formSelectBlockTitle {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.formSelectBlockText {
+  font-size: 12px;
+  font-weight: 400;
+  color: #737373;
+}
+
+.selectField :global(.ant-row) {
+  background: #fff;
+  border-radius: 15px;
+}
+
+.selectField :global(.ant-form-item-label) {
+  padding: 0;
+}
+
+.selectField :global(.ant-form-item-label > label) {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 17.1px;
+  color: #000000D9;
+}
+
+.selectField__description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13.2px;
+  color: #737373;
+}
+
+.selectField__select {
+  height: 44px;
+}
+
+.selectField__select :global(.ant-select-selector) {
+  border: 1px solid #000000;
+  padding: 0 15px;
+}
+
+.selectField__select :global(.ant-select-selection-placeholder) {
+  color: #000000D9;
+}
+
+.selectField__select :global(.ant-select-arrow) {
+  color: #000;
+}
+
+.selectField__select :global(.ant-select-arrow .anticon) {
+  font-size: 14px;
+}
+
+.selectField :global(.ant-select-disabled) {
+  background: #F5F5F5;
+  border: none;
+}
+
+@media screen and (max-width: 480px) {
+  .selectField__description {
+    margin-top: 4px;
+  }
+}

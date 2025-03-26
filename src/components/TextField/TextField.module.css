@@ -1,0 +1,64 @@
+.textField {
+  margin-bottom: 0;
+}
+
+.textField :global(.ant-row) {
+  padding: 20px;
+  background: #fff;
+  border-radius: 15px;
+}
+
+.textField :global(.ant-form-item-label) {
+  padding: 0;
+}
+
+.textField :global(.ant-form-item-label div) {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.textField :global(.ant-form-item-label > label) {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 17.1px;
+  color: #000000D9;
+}
+
+.textField :global(.ant-input) {
+  padding: 10px 15px;
+  font-family: var(--font-golos);
+  font-weight: 400;
+}
+
+.textField :global(.ant-input::placeholder) {
+  font-weight: 400;
+}
+
+.textField__description {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 13.2px;
+  color: #737373;
+}
+
+.textField__input {
+  margin-top: 8px;
+}
+
+.textField__input::placeholder {
+  color: #737373;
+}
+
+@media screen and (max-width: 768px) {
+  .textField :global(.ant-row) {
+    border-radius: 0px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .textField__description {
+    margin-top: 4px;
+  }
+}
