@@ -5,7 +5,7 @@ import { createRoot } from 'react-dom/client'
 import App from './App.tsx'
 import './main.css'
 
-const basename = '/test-project'
+const basename = '/'
 
 createRoot(document.getElementById('root')!).render(
   <HashRouter basename={basename}>
