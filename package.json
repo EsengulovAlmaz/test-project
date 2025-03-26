@@ -1,8 +1,9 @@
 {
-  "name": "cats",
+  "name": "test-project",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "module",  
+  "homepage": "https://esengulovalmaz.github.io/test-project/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
