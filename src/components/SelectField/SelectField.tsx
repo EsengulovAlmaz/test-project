@@ -8,7 +8,6 @@ type SelectType = {
   text?: string;
   label?: string;
   name: string;
-  style?: object;
   required?: boolean;
   selected?: string;
   onChange?: (value: string) => void;
@@ -17,7 +16,6 @@ type SelectType = {
 
 export const SelectField = ({
   required,
-  style,
   label,
   text,
   placeholder,
@@ -30,7 +28,7 @@ export const SelectField = ({
   const isRequired = required !== undefined ? required : false
 
   return (
-    <div className={cls.formSelectBlock} style={style}>
+    <div className={cls.formSelectBlock}>
       <Form.Item
         className={cls.selectField}
         label={label}

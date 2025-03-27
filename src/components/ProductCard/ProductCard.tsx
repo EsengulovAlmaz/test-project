@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom'
 import { DeleteOutlined, HeartFilled } from '@ant-design/icons'
 import { Button, Card, Flex } from 'antd'
 
-import { axiosInstance } from '../../configs/axios'
 import { useProducts } from '../../store/products'
 import { ProductItem } from '../../types/products'
 
@@ -23,26 +22,13 @@ const ProductCard: React.FC<ProductCardProps> = ({
   is_favorite,
   loading = false,
 }) => {
-  const [isDeleted, setIsDeleted] = React.useState(false)
   const navigate = useNavigate()
   const toggleFavorite = useProducts(state => state.toggleFavorite)
+  const deleteProduct = useProducts(state => state.deleteProduct)
+  const deleting = useProducts(state => state.deleting)
 
   const goToProduct = () => {
     navigate(`/products/${id}`)
-  }
-
-  const onDelete = async (id: number | undefined) => {
-    setIsDeleted(true)
-
-    try {
-      const res = await axiosInstance.delete(`/products/${id}`)
-
-      console.log(res)
-    } catch (e: any) {
-      console.error(e)
-    } finally {
-      setIsDeleted(false)
-    }
   }
 
   return (
@@ -62,12 +48,12 @@ const ProductCard: React.FC<ProductCardProps> = ({
           <Button
             icon={<DeleteOutlined key="delete" />}
             type="text"
-            loading={isDeleted}
-            onClick={() => onDelete(id)}
+            loading={deleting}
+            onClick={() => deleteProduct(id)}
           />
 
           <Button
-            icon={<HeartFilled style={{ color: is_favorite ? 'red' : 'gray' }} />}
+            icon={<HeartFilled className={is_favorite ? cls.favorite : cls.not_favorite} />}
             type="text"
             onClick={() => toggleFavorite(id)}
           />

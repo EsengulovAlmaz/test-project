@@ -8,15 +8,18 @@ interface State {
   allProducts: ProductItem[]
   products: ProductItem[]
   loading: boolean
+  deleting: boolean
   error: string | null
   currentPage: number
   pageSize: number
+  deletedProductIds: number[]
   fetchProducts: () => Promise<void>
   setPage: (page: number, pageSize?: number) => void
   searchProducts: (value: string) => void
   toggleFavorite: (product_id?: number) => void
   addProduct: (product: ProductItem) => void
   filterProducts: (value: string | boolean, key: string) => void
+  deleteProduct: (id: number | undefined) => void
 }
 
 export const useProducts = create<State>()(
@@ -25,9 +28,11 @@ export const useProducts = create<State>()(
       allProducts: [],
       products: [],
       loading: false,
+      deleting: false,
       error: null,
       currentPage: 1,
       pageSize: 8,
+      deletedProductIds: [],
 
       fetchProducts: async () => {
         set({ loading: true, error: null })
@@ -39,12 +44,23 @@ export const useProducts = create<State>()(
             throw new Error('Ошибка при получении продуктов.')
           }
 
-          const productsWithFavorite = res.data.map((item: ProductItem) => ({
-            ...item,
-            is_favorite: false,
-          }))
+          const deletedProductIds = get().deletedProductIds
 
-          set({ 
+          const filteredProducts = res.data.filter((item: ProductItem) => !deletedProductIds.includes(item.id))
+
+          const localProducts = get().allProducts.filter((product: ProductItem) => !deletedProductIds.includes(product.id))
+
+          const productsWithFavorite = [
+            ...filteredProducts.filter(
+              (item: ProductItem) => !localProducts.some((local) => local.id === item.id),
+            ),
+            ...localProducts,
+          ].map((item: ProductItem) => ({
+            ...item,
+            is_favorite: item.is_favorite ?? false,
+          }))
+          
+          set({
             allProducts: productsWithFavorite,
             products: productsWithFavorite,
             error: null,
@@ -59,9 +75,40 @@ export const useProducts = create<State>()(
       addProduct: (product) => {
         const allProducts = get().allProducts
         set({
-          allProducts: [...allProducts, product],
-          products: [...allProducts, product],
+          allProducts: [product, ...allProducts],
+          products: [product, ...allProducts],
         })
+      },
+
+      deleteProduct: async (id: number | undefined) => {
+        if (id === undefined) {
+          console.error('Не удалось удалить продукт: ID не определен.')
+          return
+        }
+
+        set({ deleting: true, error: null })
+
+        try {
+          const deletedProductIds = get().deletedProductIds
+          set({
+            deletedProductIds: [...deletedProductIds, id],
+          })
+
+          const allProducts = get().allProducts
+          const updatedAllProducts = allProducts.filter((item) => item.id !== id)
+
+          set({
+            allProducts: updatedAllProducts,
+            products: updatedAllProducts,
+          })
+
+          const res = await axiosInstance.delete(`/products/${id}`)
+        } catch (e: any) {
+          console.error(e)
+          set({ error: 'Ошибка при удалении продукта.' })
+        } finally {
+          set({ deleting: false })
+        }
       },
 
       setPage: (page, pageSize = get().pageSize) => {
@@ -70,26 +117,34 @@ export const useProducts = create<State>()(
 
       filterProducts: (value, key) => {
         const allProducts = get().allProducts
-      
+
         if (value === 'all') {
           set({ products: allProducts })
         } else {
-          set({ products: allProducts.filter(item => item[key] === value) })
+          set({ products: allProducts.filter((item) => item[key] === value) })
         }
       },
 
       searchProducts: (value) => {
         const allProducts = get().allProducts
-        set({ products: allProducts.filter(item => item.title.toLowerCase().includes(value.toLowerCase())) })
+        set({
+          products: allProducts.filter((item) =>
+            item.title.toLowerCase().includes(value.toLowerCase()),
+          ),
+        })
       },
 
       toggleFavorite: (product_id) => {
         set((state) => ({
-          allProducts: state.allProducts.map(item =>
-            item.id === product_id ? { ...item, is_favorite: !item.is_favorite } : item,
+          allProducts: state.allProducts.map((item) =>
+            item.id === product_id
+              ? { ...item, is_favorite: !item.is_favorite }
+              : item,
           ),
-          products: state.products.map(item =>
-            item.id === product_id ? { ...item, is_favorite: !item.is_favorite } : item,
+          products: state.products.map((item) =>
+            item.id === product_id
+              ? { ...item, is_favorite: !item.is_favorite }
+              : item,
           ),
         }))
       },

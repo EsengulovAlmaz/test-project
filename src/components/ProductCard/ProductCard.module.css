@@ -8,3 +8,11 @@
   padding: 10px;
   object-fit: contain;
 }
+
+.favorite {
+  color: red;
+}
+
+.not_favorite {
+  color: gray;
+}

@@ -23,8 +23,8 @@ const ViewProduct = () => {
   }, [id])
 
   if(loading) return (
-    <Flex justify="center" align="center" style={{ height: '90vh' }}>
-      <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
+    <Flex className={cls.spin__wrapper}>
+      <Spin indicator={<LoadingOutlined className={cls.spin__icon} spin />} />
     </Flex>
   )
 

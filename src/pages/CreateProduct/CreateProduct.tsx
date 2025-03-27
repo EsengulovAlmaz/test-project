@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
-import { Button, Form } from 'antd'
+import { Button, Form, notification } from 'antd'
 import { useForm } from 'antd/es/form/Form'
 import { nanoid } from 'nanoid'
 
@@ -26,7 +26,6 @@ const CreateProduct = () => {
     try {
       const res = await axiosInstance.post('/products', body)
 
-      console.log(res)
       addProduct({
         ...res.data,
         rating: {
@@ -40,6 +39,10 @@ const CreateProduct = () => {
       if(res.data) navigate('/products')
     } catch (e: any) {
       console.error(e)
+      notification.error({
+        message: 'Ошибка при создании продукта',
+        description: 'Попробуйте снова.',
+      })
     } finally {
       setIsLoading(false)
     }

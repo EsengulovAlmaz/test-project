@@ -15,6 +15,7 @@ const options = [
   { label: 'Мужская одежда', value: 'men\'s clothing', filter_key: 'category' },
   { label: 'Ювелирные изделия', value: 'jewelery', filter_key: 'category' },
   { label: 'Женская одежда', value: 'women\'s clothing', filter_key: 'category' },
+  { label: 'Электроника', value: 'electronics', filter_key: 'category' },
 ]
 
 const ProductsPage = () => {
@@ -57,7 +58,6 @@ const ProductsPage = () => {
           <Flex 
             justify="center" 
             align="center"
-            style={{ margin: '20px 0' }}
           >
             <Empty />
           </Flex>
@@ -65,22 +65,11 @@ const ProductsPage = () => {
       }
 
       <div className={cls.products__wrapper}>
-        {
-          loading && Array.from({ length: 12 }).map((_, index) => (
-            <ProductCard 
-              key={index}
-              loading={true}
-              title="card title"
-              image={LoadingImage}
-            />
+        {loading 
+          ? Array.from({ length: 12 }).map((_, index) => (
+            <ProductCard key={index} loading={true} title="card title" image={LoadingImage} />
           ))
-        }
-      </div>
-
-
-      <div className={cls.products__wrapper}>
-        {
-          paginatedProducts?.map(item => <ProductCard key={item.id} {...item} />)
+          : paginatedProducts.map(item => <ProductCard key={item.id} {...item} />)
         }
       </div>
 
